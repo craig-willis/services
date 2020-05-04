@@ -45,7 +45,7 @@ func main() {
 	config := swagger.Config{
 		WebServices:    wsContainer.RegisteredWebServices(), // you control what services are visible
 		ApiPath:        "/apidocs.json",
-		WebServicesUrl: "http://" + host } 
+		WebServicesUrl: "https://" + host } 
 	swagger.RegisterSwaggerService(config, wsContainer)
 
 	// Start up

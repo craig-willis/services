@@ -43,7 +43,7 @@ func Temporal(request *restful.Request, response *restful.Response) {
 	b := request.QueryParameter("b")
 	e := request.QueryParameter("e")
 
-	sr := temporalQuery(b, e)
+	sr := temporalQuery(b, e, getHost(request))
 	// fmt.Println(sr)
 	// response.WriteJson(string(sr), " ")
 	response.AddHeader("Content-Type", "application/json")
@@ -51,8 +51,8 @@ func Temporal(request *restful.Request, response *restful.Response) {
 }
 
 // temporalQuery takes a single resource and returns the variable measured property value
-func temporalQuery(b, e string) []byte {
-	repo, err := getP418SPARQL()
+func temporalQuery(b, e string, host string) []byte {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -90,3 +90,4 @@ func temporalQuery(b, e string) []byte {
 	// for this one don't return the map..  return JSON of the results
 	return j
 }
+

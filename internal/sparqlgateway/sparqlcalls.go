@@ -52,8 +52,8 @@ type ResourceSetPeople struct {
 	Orcid    string
 }
 
-func getP418SPARQL() (*sparql.Repo, error) {
-	repo, err := sparql.NewRepo("http://geodex.org/blazegraph/namespace/p418/sparql",
+func getP418SPARQL(host string) (*sparql.Repo, error) {
+	repo, err := sparql.NewRepo(fmt.Sprintf("https://%s/lazegraph/namespace/p418/sparql", host),
 		sparql.Timeout(time.Millisecond*15000),
 	)
 	if err != nil {
@@ -62,8 +62,8 @@ func getP418SPARQL() (*sparql.Repo, error) {
 	return repo, err
 }
 
-func getP418SPARQLRWG() (*sparql.Repo, error) {
-	repo, err := sparql.NewRepo("http://geodex.org/blazegraph/namespace/rwg2/sparql",
+func getP418SPARQLRWG(host string) (*sparql.Repo, error) {
+	repo, err := sparql.NewRepo(fmt.Sprintf("https://%s/blazegraph/namespace/rwg2/sparql", host),
 		sparql.Timeout(time.Millisecond*15000),
 	)
 	if err != nil {
@@ -85,8 +85,8 @@ func DEVSPARQL() (*sparql.Repo, error) {
 }
 
 // OrgCall takes a single resource and returns the variable measured property value
-func OrgCall(resource string) []byte {
-	repo, err := getP418SPARQLRWG()
+func OrgCall(resource string, host string) []byte {
+	repo, err := getP418SPARQLRWG(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -122,8 +122,8 @@ func OrgCall(resource string) []byte {
 }
 
 // DescribeCall takes a single resource and returns the variable measured property value
-func DescribeCall(resource string) string {
-	repo, err := getP418SPARQL()
+func DescribeCall(resource string, host string) string {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -156,8 +156,8 @@ func DescribeCall(resource string) string {
 }
 
 // ResSetPeople takes a single resource and returns the variable measured property value
-func ResSetPeople(resources URLSet) []ResourceSetPeople {
-	repo, err := getP418SPARQL()
+func ResSetPeople(resources URLSet, host string) []ResourceSetPeople {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -191,8 +191,8 @@ func ResSetPeople(resources URLSet) []ResourceSetPeople {
 }
 
 // DetailsCall takes a single resource and returns the variable measured property value
-func DetailsCall(resources string) DetailResults {
-	repo, err := getP418SPARQL()
+func DetailsCall(resources string, host string) DetailResults {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -241,8 +241,8 @@ func DetailsCall(resources string) DetailResults {
 }
 
 // ResSetCall takes a single resource and returns the variable measured property value
-func ResSetCall(resources URLSet) []ResourceResults {
-	repo, err := getP418SPARQL()
+func ResSetCall(resources URLSet, host string) []ResourceResults {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -276,8 +276,8 @@ func ResSetCall(resources URLSet) []ResourceResults {
 }
 
 // ResCall takes a single resource and returns the variable measured property value
-func ResCall(resource string) []ResourceResults {
-	repo, err := getP418SPARQL()
+func ResCall(resource string, host string) []ResourceResults {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}
@@ -311,8 +311,8 @@ func ResCall(resource string) []ResourceResults {
 }
 
 // LogoCall takes a single resource and returns the variable measured property value
-func LogoCall(resource string) []LogoResults {
-	repo, err := getP418SPARQL()
+func LogoCall(resource string, host string) []LogoResults {
+	repo, err := getP418SPARQL(host)
 	if err != nil {
 		log.Printf("%s\n", err)
 	}

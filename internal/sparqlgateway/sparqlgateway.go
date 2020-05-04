@@ -90,7 +90,7 @@ func Dev() *restful.WebService {
 func Organizations(request *restful.Request, response *restful.Response) {
 	resource := request.QueryParameter("r")
 
-	sr := OrgCall(resource)
+	sr := OrgCall(resource, getHost(request))
 	// fmt.Println(sr)
 	// response.WriteJson(string(sr), " ")
 	response.AddHeader("Content-Type", "application/json")
@@ -100,7 +100,7 @@ func Organizations(request *restful.Request, response *restful.Response) {
 func Describe(request *restful.Request, response *restful.Response) {
 	resource := request.QueryParameter("r")
 
-	sr := DescribeCall(resource)
+	sr := DescribeCall(resource, getHost(request))
 	response.WriteEntity(sr)
 }
 
@@ -108,7 +108,7 @@ func Describe(request *restful.Request, response *restful.Response) {
 func Details(request *restful.Request, response *restful.Response) {
 	resource := request.QueryParameter("r")
 
-	sr := DetailsCall(resource)
+	sr := DetailsCall(resource, getHost(request))
 	response.WriteEntity(sr)
 }
 
@@ -116,7 +116,7 @@ func Details(request *restful.Request, response *restful.Response) {
 func ResourceCall(request *restful.Request, response *restful.Response) {
 	resource := request.QueryParameter("r")
 
-	sr := ResCall(resource)
+	sr := ResCall(resource, getHost(request))
 	response.WriteEntity(sr)
 }
 
@@ -124,7 +124,7 @@ func ResourceCall(request *restful.Request, response *restful.Response) {
 func Logo(request *restful.Request, response *restful.Response) {
 	resource := request.QueryParameter("r")
 
-	sr := LogoCall(resource)
+	sr := LogoCall(resource, getHost(request))
 	response.WriteEntity(sr)
 }
 
@@ -149,7 +149,7 @@ func ResourceSetCall(request *restful.Request, response *restful.Response) {
 		return
 	}
 
-	sr := ResSetCall(jas)
+	sr := ResSetCall(jas, getHost(request))
 	response.WriteEntity(sr)
 }
 
@@ -174,6 +174,18 @@ func ResourceSetPeopleCall(request *restful.Request, response *restful.Response)
 		return
 	}
 
-	sr := ResSetPeople(jas)
+	sr := ResSetPeople(jas, getHost(request))
 	response.WriteEntity(sr)
+}
+
+
+func getHost(req *restful.Request) (string) {
+	var host string
+	hostvalues, ok := req.Request.Header["Host"]
+	if !ok || len(hostvalues) == 0 {
+		host = req.Request.Host
+	} else	{
+		host = hostvalues[0]
+	}
+	return host
 }
